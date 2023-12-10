@@ -1,0 +1,70 @@
+Basic Unix/Bash commands with explanation.
+
+exit - close the terminal
+Ctrl-C - gracefully stops the program in the terminal. It could not work if the program doen't design for this command or just stuck in a particule state.
+Ctrl-S - stops flowing the data on the screen.
+Ctrl-Q - resums flowing data on the screen. These pair of commands could be used in programs where output scrolls rapidly.
+Ctrl-A - moves cursor to the beginning of the current line.
+Ctrl-E - moves cursor to the end of the current line.
+Ctrl-K - deletes the the text from the cursor position to the end of the line.
+Arrow Up/Down - allows to quick grab commands that were used before.
+tab-completion - auto complete the typing command.
+uname - prints the system information. Without parameters only system name.
+uname -a - prints all available system information including name, kernel, network node hostname and more.
+date - shows current date.
+who - displays a list of currently logged users with their login times and terminal information.
+last - shows the history of previous user login (similar to 'who', but in the past)
+history - shows all history of cammands that have been executed.
+history 10 - shows last 10 commands that have been executed.
+man <command_name> - shows a detailed manual about the command.
+
+touch <file_name> - creates an empty file or can be used to update existing file timestamps (metadata)
+vi <file_name> opens file in terminal redactor 'vi'
+vim <file_name> - more enchanced version of 'vi'
+view <file_name> - it is a link to 'vi' or 'vim'. But it opens the file in read only mode.
+vimdiff [file.1...file.n] - is the feature of 'vim' that allows to compare and highlight the differences in differenet files.
+less <file_name> - allows to view file in terminal. Provides scrolling, searching and navigation.
+move <file_name> - allows to view file by page. It's similar to 'less' but with but have a limit functional
+
+top - monitors system processes in real time including CPU usage, memory usage, running processes, system uptime, and more.
+htop - more advanced version of 'top'
+ps - provides a snapshot of active porcesses on the system in the moment of the command usage.
+ps aux or ps -ef - displays a detailed list of all processes currently running on the system, including information such as user, PID (Process ID), CPU usage, memory usage, command name, etc.
+ps auxww - it's similar to ps aux but the 'ww' prowides the output with no truncating.
+
+cd - without args changes current directory to user's home directory.
+'cd -' - changes current directory to the directory that where right before.
+pwd - print working directory.
+ls - displays the files and directories in current working directory.
+ls -alF - is 'ls' with options: 
+'a' - show all files include hidden; 'l' - show the additional information, such as file permision, ownership group, file size, modification date, file/directory names;
+'F' - appends indecation: '/' - at the end of directory names; '*' at the end of executable files; '@' at the and of symbolic links; no indicator for regular files.
+ls -aldF - + option 'd' - lists only the directory themselves. In combination with with other options it shows the addition information about the directories.
+ls -ltr - 't' - sorts by modification time (newest first); 'r' - reverse the list.
+
+echo "path is $PATH" - 'echo' - prints text or variables;
+"path is $PATH" - 'path is' - message that will be printed; '$PATH' - the dollar sign used to reference the value of the 'PATH' enviroment variable.
+
+echo $PATH - prints the referenced variable 'PATH'
+
+date - shows current system date.
+
+set - with no options displays shell variables functions. Can be used in following cases:
+   *Setting enviroment variables: set VAR = "Hello, World!".
+   *Setting positional parameters: set -- bike orange flower
+   *Enabling/Disabling shell options: set -o noclober, set -o.
+   *Enabling/Disabling debugging mode: set -x
+
+env - with no options displays enviroment variables. Can be used in following cases:
+   *Setting enviroment variables and execute it with a command: env PATH=/custom/path ls
+   *Modify a global variable for a command: env USER=newuser command
+   *Unset variables: env -u VAR1
+   *Unset variables for the specific command: env -u PATH ls
+
+export <variable_name>- uses to export variables to other processes. With no options displays a list of currently defined enviroment variables ready for export
+
+bash <file.hs> - executes file.
+source <file.hs> or . <file.hs> - executes the file as if the commands in the file were typed directly into the current shell.
+It can set enviroment variables, or do some other changes and they will be applied to current shell.
+
+
