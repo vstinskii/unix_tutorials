@@ -16,6 +16,7 @@ who - displays a list of currently logged users with their login times and termi
 last - shows the history of previous user login (similar to 'who', but in the past)
 history - shows all history of cammands that have been executed.
 history 10 - shows last 10 commands that have been executed.
+!<number_of_the_command> - runs setted by number (index) command from history.
 man <command_name> - shows a detailed manual about the command.
 
 touch <file_name> - creates an empty file or can be used to update existing file timestamps (metadata)
@@ -48,23 +49,49 @@ echo "path is $PATH" - 'echo' - prints text or variables;
 echo $PATH - prints the referenced variable 'PATH'
 
 date - shows current system date.
+cal - prints the callendar.
+cal -y or <year> - prints the callendar of the current or setted year.
 
-set - with no options displays shell variables functions. Can be used in following cases:
+[*] set - with no options displays shell variables functions. Can be used in following cases:
    *Setting enviroment variables: set VAR = "Hello, World!".
    *Setting positional parameters: set -- bike orange flower
    *Enabling/Disabling shell options: set -o noclober, set -o.
    *Enabling/Disabling debugging mode: set -x
 
-env - with no options displays enviroment variables. Can be used in following cases:
+[*] env - with no options displays enviroment variables. Can be used in following cases:
    *Setting enviroment variables and execute it with a command: env PATH=/custom/path ls
    *Modify a global variable for a command: env USER=newuser command
    *Unset variables: env -u VAR1
    *Unset variables for the specific command: env -u PATH ls
 
-export <variable_name>- uses to export variables to other processes. With no options displays a list of currently defined enviroment variables ready for export
+[*] export <variable_name> - uses to export variables to other processes. With no options displays a list of currently defined enviroment variables ready for export
 
 bash <file.hs> - executes file.
 source <file.hs> or . <file.hs> - executes the file as if the commands in the file were typed directly into the current shell.
 It can set enviroment variables, or do some other changes and they will be applied to current shell.
+
+[*] .bashrc vs .bash_profile vs .bash_aliases
+
+stdin - standart intput. By default reads data from keyboard or another source/programm in pipe case. To redirect reading use "<".
+stdout - standart output. By default displays data on the terminal or sends to another source/programm in pipe case. To readirect ise "1>"
+stderr - standart error output. By default displays data on the terminal or sends to another source/programm in pipe case. To readirect ise "2>". Shouldn't be mixed with standart output.
+
+cat <file_name> or <file_name1...file_name_n> - prints the content of file(s) to the terminal. Can be used to concatenate files.
+head -n <amount_of_lines> <file_name> - displays some amount of lines staring from the beginning. By default prints 10 lines.
+tail -n <amount_of_lines> <file_name> - similar to 'head', but starts from the end of the file.
+
+type <func_name> - returns the info about the function, like type: hashed or aliased, and place or realisation(implementation) of the function.
+which <file_name> - displays the path of executable files in the system's PATH enviroment veriables.
+
+grep - is used to search specific files or text by pattern. There are the examples of different usecases:
+   *cat file(s) | grep "Python" - dispalys the lines of text from file(s) that contain the word(pattern) "Python".
+   *cat file(s) | grep "Python" | grep -v "IN_PROCESS" - the same as the previous command but shows the text that doesn't contain "IN_PROCESS".
+   *ll | grep "u0" - displays the list of files/foldes that contain "u0" in the name.
+
+find - provides extensive capabilities of search. It's similar to 'ls | grep' combination but more powerful and flexable.There is examples of usage:
+   *find path/to/folder/ -name 'u0*.txt' - displays the list of the files that have first name characters 'u0' and last name characters '.txt'
+   *find python_tutorials/ -name 'u0*.txt' | xargs grep 'file' - the same as previous command but with grep sections that prints the lines of files with 'file' word.
+
+xargs - converts data from stdin or pipes in arguments. It's useful when common or piped command doesn't have a standart input but only arguments.
 
 
