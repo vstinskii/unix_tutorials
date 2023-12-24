@@ -94,4 +94,121 @@ find - provides extensive capabilities of search. It's similar to 'ls | grep' co
 
 xargs - converts data from stdin or pipes in arguments. It's useful when common or piped command doesn't have a standart input but only arguments.
 
+[*] 
+    find . -print0 | xargs -0 cmd 
+    find . -exec cmd -option1 -option2 -- {} +
+    find . -print0 | xargs -0 cmd -option1 -option2 --
 
+cp - copies files or foledrs, also allows to rename file or folder. Examples of usage:
+   cp file1 file2 - copies all content from file1 to file2. If file2 is not exist, 'cp' will create it in other way it will overwrite the content of file2.
+   cp file1 /some/path/file2 - copies file1 to '/some/path/' directory and renames it to file2.
+
+mv - moves files or folders, can do rename as 'cp'. Examples of usage:
+   mv file1 file2 - moves file1 to file2, replaces the content of file1 to file2. If file2 is not exist 'mv' will create it. Removes the original file1.
+   mv file1 /some/path/file2 - works as 'cp' but removes the original file1.
+
+rm <file_name> - permanently removes file. The file won't be recovered from the system's trash or recycle bin.
+rm -rf <dir_name> - permanently and recursively deletes the removes the directory with all subdirectories and files. Command parameters:
+   -r - recursive deleting.
+   -f - force deleting. Without prompting for confirmation, even if the files are write - protected.
+
+tar zcvf myfile.tar.gz somefiles* - zips files that match the pattern 'somefiles*' and names the archive 'myfile.tar.gz'. Command parameters:
+   z - use gzip to compress the files.
+   c - creates new archive.
+   v - show all the processed files.
+   f - spceifies the file name.
+
+tar ztvf myfile.tar.gz - list the content of 'myfile.tar.gz' without extracting the content. Command parameters:
+   z - use gzip to decompress the content.
+   t - lists lists the content of archive without extracting.
+
+tar zxvf myfile.tar.gz - extracting the content of 'myfile.tar.gz'. Command options:
+   x - extracts file from the archive.
+
+zip -r mystuff.zip dir1 dir2 - zips the content of dir1 and dir2 to zipfile mystuff.zip, including all their subdirectories and files. Command parameters:
+   -r - recuresively includes all subdirs and files.
+
+unzip mystuff.zip - unzips the mystuff.zip.
+
+kill pid - sends 'SIGTERM' signal to the process by process id (PID), and allows it to clean up tasks and exit gracefully.
+kill -9 pid - sends 'SIGKILL' signal to the process which immediatly terminates it.
+pkill name - uses name of process instead of id.
+
+nohup <command> & - allows command to immune hangups signals and continue working even if terminal is closed or user logs out. Command parameters:
+   & - runs the command in the background, allowing to continue using the terminal.
+
+example of usage:
+   nohup python myscript.py > mylog.log 2>&1 &:
+       2>&1 - redirects stderr to same location as stdout.
+
+jobs - displays the list of background jobs that are running within current shell session.
+
+fg <%job_number> ; Ctrl-C (interact action) - allows to bring job from background to foreground. Job can be interacted from terminal.
+
+crontab -e - allows to edit crontab table which contains scheduled tasks.
+
+crontab -l - displays the list of current crontab tasks for current user.
+
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" - generate ssh-key.
+
+ftp <server_adress> - file transfer protocol. Allows to connect with the server. Can be used to transfer files:
+   get <filename> - download file from the server.
+   put <filename> - upload the file to the server.
+   mget * - download multiple files.
+   mput * - upload multiple files.
+   bye or exit - close FTP connection and exit FTP client.
+   close - close FTP connection without exiting the FTP client.
+
+telnet <hostname> <port> (by default port 23) - allows to remotly access the server. It's useful when need to get a remote access to servers and networking devices (routers switches).
+
+[*] curl
+
+wget <option> <url> - used for non-interactive downloading files. Supports follow protocols: HTTP, HTTPS, FTP. Example of usage:
+   wget https://www.example.com/file.zip - download file.
+   wget -O custom_name.zip wget https://www.example.com/file.zip - save file with a specific name.
+   wget -c https://www.example.com/largefile.zip - continue an incomplete download.
+
+rsync <option> <source_files> <destination_files> - used for synchronizing file and directories. It insures that that the destination is an exact copy of source. Examples of usage:
+   rsync test1.py test2.py - ensures that test1.py matches to test2.py in content and metadata. If it's not, updates test2.py acording to test1.py. If test2.py doesn't exist it will create it with a content of source (test1.py)
+   rsync -avzh test1.py test2.py - the first command with additional options:
+       -a - archive mode. preserving permissions, user, timestamps and recursively copies directories.
+       -v - verobose.
+       -z - compress data to reduce the amount of data sent over the network.
+       -h - human readable.
+   rsync -avzh myfile mydir/ - ensues that file 'myfile' exists in 'mydir/' directory.
+   
+   rsync -avzh mydir mydir2/ - ensues not only content but a source file 'mydir' with it.
+   rsync -avzh mydir/ mydir2/ - unsues only content of source file to 'mydir2' destination file.
+   rsync -avzh mydir/ mydir2 - same as previous command.
+
+   rsync -avzh --exclude 'somedir1/*.csv' - with option '--exclude' that exludes specified files or directories.
+
+   rsync -avzh -H --delete anaconda3/ anaconda3_bckup_2022-05-01 - making backup using rsync. Explanation of new options:
+      -H - preserves hardlinks.
+      --delete - deletes the file in destination directory that don't exisit in source directories.
+
+   [*] rsync -avzh -e ssh remoteuser@remoteserver.com:/mypath/mydir "/mytarget/dir/ - rsync from remote server.
+
+fdfind or fd - it is an alternative to 'find' but it has simplified syntax and faster. Example of usage:
+   fd 'test' <directory> - find files/folders by pattern 'test' under the specified directory.
+   fd . /my_dir - find all files in 'my_dir'.
+   fd '^m.*back.*$' - use regex.
+   fd -e txt - finds files with 'txt' extention.
+   fd -g <name_pattern> - global-based search. It will return the files/folders that will be match with pattern 100%.
+   fd -H - includes hidden files.
+   [*] fd ... -X ls -lhd --color=always 
+   fd -e jpg -x convert {} {.}.png - conterts jpg files into png.
+   fd -H .DS_Store -x rm {} - searchs the file '.DS_Store' in the current directory and removes it.
+   fd -S +2g - finds files, larger than 2 GB.
+   
+      fd --newer 1h - finds, that was modified within last hour.
+      fd --changed-within 1month - displays files that have been modified within the month.
+      fd --changed-before 1month - displays files that have been modified before the month.
+      [*] fd --change-older-than 2weeks
+   
+find . -mtime -1 - modified in last 24 hours. Command options:
+   -mtime -1 - modified within the last day.
+find . -type f -mmin -120 -mmin +60 - files that have been modified 120 - 60 min ago. Command options:
+   -type f - displays only regular files.
+   -mmin -120 - more than 120 min ago.
+   -mmin +60 - more than 60 min ago.
